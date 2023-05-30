@@ -1,0 +1,39 @@
+@keyframes pulsate {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+h2 {
+  color: #333;
+  font-size: 24px;
+  text-align: center;
+  margin-bottom: 20px;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  background-color: hotpink;
+  animation: pulsate 2s ease-in-out infinite;
+}
+
+h3 {
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-size: medium;
+  color: magenta;
+  font-style: oblique;
+}
+
+.btn1 {
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-size: small;
+  margin: 1%;
+  background-color: burlywood;
+}
+ .recipe-image {
+  width: 40px;
+  height: 40px;
+ }
