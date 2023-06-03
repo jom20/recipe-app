@@ -62,7 +62,7 @@ const AdminPanel = () => {
               <input
                 id="image"
                 className="form-control"
-                type="file"
+                type="text"
                 placeholder="Image"
                 value={image}
                 onChange={handleImageChange}
