@@ -24,7 +24,7 @@ const RecipeDetails = () => {
 
   return (
     <div className="container">
-      <h2> {recipe.title}</h2>
+      <h2>{recipe.title}</h2>
       <img className="custom-thumbnail" src={recipe.image} alt={recipe.title} />
       <p>{recipe.description}</p>
       <CommentForm recipeId={id} />

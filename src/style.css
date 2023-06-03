@@ -37,3 +37,62 @@ h3 {
   width: 40px;
   height: 40px;
  }
+
+ .fantasy-card {
+  background-color: #f7f1e3;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+.nature-card {
+  background-color: #edf6f9;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.nature-image {
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.nature-btn {
+  background-color: #72a98f;
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  border-radius: 20px;
+  padding: 5px 10px;
+  transition: background-color 0.3s ease;
+}
+
+.nature-btn:hover {
+  background-color: #56896e;
+}
+
+
+.fantasy-btn {
+  background-color: #b56576;
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 20px;
+  margin-bottom: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.fantasy-btn:hover {
+  background-color: #8c3e4e;
+}
+
+.fantasy-btn-primary {
+  background-color: #6e94b7;
+}
+
+.fantasy-btn-primary:hover {
+  background-color: #506f9e;
+}

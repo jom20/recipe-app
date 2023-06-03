@@ -17,19 +17,23 @@ const RecipeList = () => {
 
   return (
     <div className="container">
-      <h2>Recipes</h2>
-      <ul className="list-group">
+      <h2 className="text-center">Recipes</h2>
+      <div className="row">
         {recipes.map(recipe => (
-          <li className="list-group-item" key={recipe.id}>
-            <div className="recipe-item">
-              <img className="recipe-image" src={recipe.image} alt={recipe.title} />
-              <a href={`/recipe/${recipe.id}`}>{recipe.title}</a>
+          <div className="col-lg-4 col-md-6 mb-4" key={recipe.id}>
+            <div className="card">
+              <img src={recipe.image} className="card-img-top" alt={recipe.title} style={{width: '300px', height: '250'}} />
+              <div className="card-body">
+                <h5 className="card-title">{recipe.title}</h5>
+                <p className="card-text">{recipe.description}</p>
+                <a href={`/recipe/${recipe.id}`} className="btn btn-primary">View Details</a>
+              </div>
             </div>
-          </li>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
-  );  
+  );
 };
 
 export default RecipeList;

@@ -44,20 +44,25 @@ const CommentForm = ({ recipeId }) => {
 
   return (
     <div className="container">
-      <h3>Comments</h3>
-      {comments.map((comment, index) => (
-        <p key={comment.id}>
-          <strong>Person {index + 1}:</strong> {comment.comment}
-        </p>
-      ))}
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <textarea className="form-control" placeholder="Add a comment" value={comment} onChange={handleCommentChange} required></textarea>
+      <h3 className="text-center">Comments</h3>
+      <div className="card mb-4">
+        <div className="card-body">
+          {comments.map((comment, index) => (
+            <p key={comment.id} className="card-text">
+              <strong>Person {index + 1}:</strong> {comment.comment}
+            </p>
+          ))}
+          <form onSubmit={handleSubmit}>
+            <div className="form-group">
+              <textarea className="form-control" placeholder="Add a comment" value={comment} onChange={handleCommentChange} required></textarea>
+            </div>
+            <button className="btn btn-primary" type="submit" style={{ margin: '10px'}}>Submit</button>
+          </form>
         </div>
-        <button className="btn btn-primary" type="submit" style = {{ backgroundColor: 'pink', margin: 10 }}>Submit</button>
-      </form>
+      </div>
     </div>
   );
 };
 
 export default CommentForm;
+ 

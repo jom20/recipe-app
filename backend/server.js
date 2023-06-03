@@ -1,8 +1,10 @@
 import express from "express";
 import mysql from "mysql";
 import cors from "cors";
+import bcrypt from "bcrypt";
 
 const port = 8800;
+const saltRounds = 10;
 
 const app = express();
 
@@ -32,16 +34,48 @@ app.get('/api/recipes', (req, res) => {
   });
 });
 
+app.post("/api/signup", (req, res) => {
+  const { name, username, password } = req.body;
+
+  bcrypt.hash(password, saltRounds, (hashErr, hashedPassword) => {
+    if (hashErr) {
+      console.error(hashErr);
+      return res.status(500).json({ error: 'Internal server error' });
+    }
+
+    const insertQuery = "INSERT INTO login (name, username, password) VALUES (?, ?, ?)";
+    pool.query(insertQuery, [name, username, hashedPassword], (insertErr, insertResult) => {
+      if (insertErr) {
+        console.log(insertErr);
+        return res.status(500).json({ error: 'Internal server error' });
+      }
+      return res.status(200).json({ message: 'User registered successfully' });
+    });
+  });
+});
+
+
+
 app.post('/api/login', (req, res) => {
   const { username, password } = req.body;
-  pool.query('SELECT * FROM login WHERE username = ? AND password = ?', [username, password], (error, results) => {
+  pool.query('SELECT * FROM login WHERE username = ?', [username], (error, results) => {
     if (error) {
       console.error(error);
       res.status(500).send('Internal Server Error');
     } else if (results.length === 0) {
       res.status(401).send('Invalid username or password');
     } else {
-      res.sendStatus(200);
+      const storedPassword = results[0].password;
+      bcrypt.compare(password, storedPassword, (compareErr, isMatch) => {
+        if (compareErr) {
+          console.error(compareErr);
+          res.status(500).send('Internal Server Error');
+        } else if (isMatch) {
+          res.sendStatus(200);
+        } else {
+          res.status(401).send('Invalid username or password');
+        }
+      });
     }
   });
 });
@@ -73,6 +107,24 @@ app.post('/api/recipes', (req, res) => {
       res.sendStatus(201);
     }
   });
+});
+// Update a recipe in the database
+app.put('/api/recipes/:id', (req, res) => {
+  const recipeId = req.params.id;
+  const { title, image, description } = req.body;
+
+  pool.query(
+    'UPDATE recipes SET title = ?, image = ?, description = ? WHERE id = ?',
+    [title, image, description, recipeId],
+    (error, results) => {
+      if (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+      } else {
+        res.sendStatus(200);
+      }
+    }
+  );
 });
 
 // Fetch comments for a recipe

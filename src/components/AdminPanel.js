@@ -37,53 +37,57 @@ const AdminPanel = () => {
 
   return (
     <div className="container mt-4">
-      <h2>Add Recipe</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="mb-3">
-          <label htmlFor="title" className="form-label">
-            Title
-          </label>
-          <input
-            id="title"
-            className="form-control"
-            type="text"
-            placeholder="Title"
-            value={title}
-            onChange={handleTitleChange}
-            required
-          />
+      <div className="card">
+        <h2 className="card-header text-center">Add Recipe</h2>
+        <div className="card-body">
+          <form onSubmit={handleSubmit}>
+            <div className="mb-3">
+              <label htmlFor="title" className="form-label">
+                Title
+              </label>
+              <input
+                id="title"
+                className="form-control"
+                type="text"
+                placeholder="Title"
+                value={title}
+                onChange={handleTitleChange}
+                required
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="image" className="form-label">
+                Image
+              </label>
+              <input
+                id="image"
+                className="form-control"
+                type="file"
+                placeholder="Image"
+                value={image}
+                onChange={handleImageChange}
+                required
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="description" className="form-label">
+                Description
+              </label>
+              <textarea
+                id="description"
+                className="form-control"
+                placeholder="Description"
+                value={description}
+                onChange={handleDescriptionChange}
+                required
+              ></textarea>
+            </div>
+            <button className="btn btn-primary" type="submit">
+              Add Recipe
+            </button>
+          </form>
         </div>
-        <div className="mb-3">
-          <label htmlFor="image" className="form-label">
-            Image
-          </label>
-          <input
-            id="image"
-            className="form-control"
-            type="text"
-            placeholder="Image"
-            value={image}
-            onChange={handleImageChange}
-            required
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="description" className="form-label">
-            Description
-          </label>
-          <textarea
-            id="description"
-            className="form-control"
-            placeholder="Description"
-            value={description}
-            onChange={handleDescriptionChange}
-            required
-          ></textarea>
-        </div>
-        <button className="btn" type="submit">
-          Add Recipe
-        </button>
-      </form>
+      </div>
     </div>
   );
 };
