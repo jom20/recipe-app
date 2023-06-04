@@ -22,7 +22,6 @@ const Delete = () => {
       .delete(`http://localhost:8800/api/recipes/${id}`)
       .then(response => {
         console.log('Recipe deleted successfully');
-        // Update the recipe list after deleting
         setRecipes(recipes.filter(recipe => recipe.id !== id));
       })
       .catch(error => {
@@ -31,35 +30,19 @@ const Delete = () => {
   };
 
   return (
-    <div className="container">
-      <h2>Delete Recipes</h2>
-      <ul className="list-group">
-        {recipes.map(recipe => (
-          <li className="list-group-item" key={recipe.id}>
-            <div className="row align-items-center">
-              <div className="col-4">
-                <img
-                  className="custom-logo rounded-circle"
-                  src={recipe.image}
-                  alt={recipe.title}
-                  style={{ width: '100px', height: '100px' }}
-                />
-              </div>
-              <div className="col-6">
-                <span className="fw-bold">{recipe.title}</span>
-              </div>
-              <div className="col-2">
-                <button
-                  className="btn btn-danger btn-sm"
-                  onClick={() => handleDelete(recipe.id)}
-                >
-                  Delete
-                </button>
-              </div>
-            </div>
-          </li>
-        ))}
-      </ul>
+    <div className="container mt-4">
+      <h2>Recipes</h2>
+      {recipes.map(recipe => (
+        <div key={recipe.id} className="mb-3">
+          <h3>{recipe.title}</h3>
+          <p>{recipe.description}</p>
+          <button
+            className="btn btn-danger"
+            onClick={() => handleDelete(recipe.id)}>
+            Delete
+          </button>
+        </div>
+      ))}
     </div>
   );
 };

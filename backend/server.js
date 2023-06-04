@@ -34,25 +34,6 @@ app.get('/api/recipes', (req, res) => {
   });
 });
 
-// Update a recipe in the database
-app.put('/api/recipes/:id', (req, res) => {
-  const recipeId = req.params.id;
-  const { title, image, description } = req.body;
-
-  pool.query(
-    'UPDATE recipes SET title = ?, image = ?, description = ? WHERE id = ?',
-    [title, image, description, recipeId],
-    (error, results) => {
-      if (error) {
-        console.error(error);
-        res.status(500).send('Internal Server Error');
-      } else {
-        res.sendStatus(200);
-      }
-    }
-  );
-});
-
 app.post("/api/signup", (req, res) => {
   const { name, username, password } = req.body;
 
@@ -145,6 +126,21 @@ app.put('/api/recipes/:id', (req, res) => {
     }
   );
 });
+
+// Delete a recipe from the database
+app.delete('/api/recipes/:id', (req, res) => {
+  const recipeId = req.params.id;
+
+  pool.query('DELETE FROM recipes WHERE id = ?', [recipeId], (error, results) => {
+    if (error) {
+      console.error(error);
+      res.status(500).send('Internal Server Error');
+    } else {
+      res.sendStatus(200);
+    }
+  });
+});
+
 
 // Fetch comments for a recipe
 app.get('/api/recipes/:id/comments', (req, res) => {

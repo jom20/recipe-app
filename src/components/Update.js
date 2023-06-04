@@ -1,59 +1,98 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import axios from "axios";
+import React, { useState, useEffect } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-const Update = () => {
-  const [recipes, setRecipes] = useState([]);
+const UpdateRecipe = () => {
+  const [recipe, setRecipe] = useState({
+    title: "",
+    image: "",
+    description: "",
+  });
+  const [error, setError] = useState(false);
+
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const recipeId = location.pathname.split("/")[2];
 
   useEffect(() => {
-    // Fetch recipes from the server
-    axios
-      .get('http://localhost:8800/api/recipes')
-      .then(response => {
-        setRecipes(response.data);
-      })
-      .catch(error => {
-        console.error(error);
-      });
-  }, []);
+    const fetchRecipe = async () => {
+      try {
+        const res = await axios.get(`http://localhost:8800/api/recipes/${recipeId}`);
+        setRecipe(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchRecipe();
+  }, [recipeId]);
 
-  const handleUpdate = recipeId => {
-    // Handle update logic here
-    console.log(`Update recipe with ID: ${recipeId}`);
+  const handleChange = (e) => {
+    setRecipe((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
 
-    // Example update request to the server
-    axios
-      .put(`http://localhost:8800/api/recipes/${recipeId}`, { /* Updated recipe data */ })
-      .then(response => {
-        console.log('Recipe updated successfully');
-        // Perform any necessary UI updates or navigation after successful update
-      })
-      .catch(error => {
-        console.error(error);
-      });
+  const handleClick = async (e) => {
+    e.preventDefault();
+
+    try {
+      await axios.put(`http://localhost:8800/api/recipes/${recipeId}`, recipe);
+      navigate("/view");
+    } catch (err) {
+      console.log(err);
+      setError(true);
+    }
   };
 
   return (
-    <div className="container mt-4">
-      <h2 className="text-center">Update Recipe</h2>
-      <div className="card nature-card">
-        <div className="card-body">
-          <ul className="list-group">
-            {recipes.map(recipe => (
-              <li className="list-group-item d-flex justify-content-between align-items-center" key={recipe.id}>
-                <div>
-                  <img className="nature-image" src={recipe.image} alt={recipe.title} />
-                  {recipe.title}
-                </div>
-                <button className="btn btn-primary nature-btn" onClick={() => handleUpdate(recipe.id)}>
-                  Update
-                </button>
-              </li>
-            ))}
-          </ul>
+    <div className="container" style={{ margin: '10px'}}>
+      <div className="card p-4" style={{ backgroundColor: "#e3f2fd", maxWidth: "500px", margin: "0 auto" }}>
+        <h1 className="text-center mb-4" style={{ color: "#1565c0" }}>Update Recipe</h1>
+        <div className="form-group">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Recipe Title"
+            name="title"
+            value={recipe.title}
+            onChange={handleChange}
+            style={{ backgroundColor: "#FFFFFF", borderRadius: "5px", padding: "10px", margin: "10px" }}
+          />
+        </div>
+        <div className="form-group">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Image URL"
+            name="image"
+            value={recipe.image}
+            onChange={handleChange}
+            style={{ backgroundColor: "#FFFFFF", borderRadius: "5px", padding: "10px", margin: "10px" }}
+          />
+        </div>
+        <div className="form-group">
+          <textarea
+            rows={4}
+            className="form-control"
+            placeholder="Description"
+            name="description"
+            value={recipe.description}
+            onChange={handleChange}
+            style={{ backgroundColor: "#FFFFFF", borderRadius: "5px", padding: "10px", margin: "10px" }}
+          ></textarea>
+        </div>
+        <div className="btn-group">
+          <button className="btn btn-primary" style={{ backgroundColor: "#336699", margin: '5px' }} onClick={handleClick}>
+            Update
+          </button>
+          {error && <p className="text-danger">Something went wrong!</p>}
+          <Link className="btn btn-primary" style={{ backgroundColor: "#336699", margin: '5px' }} to="/view">
+            See all recipes
+          </Link>
         </div>
       </div>
     </div>
   );
 };
 
-export default Update;
+export default UpdateRecipe;

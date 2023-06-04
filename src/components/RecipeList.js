@@ -6,7 +6,8 @@ const RecipeList = () => {
 
   useEffect(() => {
     // Fetch recipes from the server
-    axios.get('http://localhost:8800/api/recipes')
+    axios
+      .get('http://localhost:8800/api/recipes')
       .then(response => {
         setRecipes(response.data);
       })
@@ -16,19 +17,35 @@ const RecipeList = () => {
   }, []);
 
   return (
-    <div className="container">
-      <h2 className="text-center">Recipes</h2>
+    <div className="container" style={{ backgroundColor: '#f5f5f5', padding: '20px', margin: '10px' }}>
+      <h1 className="text-center" style={{ color: '#333', fontFamily: 'Arial, sans-serif', marginBottom: '20px' }}>
+        Recipes
+      </h1>
       <div className="row">
         {recipes.map(recipe => (
-          <div className="col-lg-4 col-md-6 mb-4" key={recipe.id}>
-            <div className="card">
-              <img src={recipe.image} className="card-img-top" alt={recipe.title} style={{width: '300px', height: '250'}} />
-              <div className="card-body">
-                <h5 className="card-title">{recipe.title}</h5>
-                <p className="card-text">{recipe.description}</p>
-                <a href={`/recipe/${recipe.id}`} className="btn btn-primary">View Details</a>
-              </div>
-            </div>
+          <div
+            className="col-md-4"
+            key={recipe.id}
+            style={{
+              backgroundColor: '#fff',
+              color: '#333',
+              boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+              marginBottom: '20px',
+              padding: '10px',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center'
+            }}
+          >
+            <img
+              src={recipe.image}
+              alt={recipe.title}
+              style={{ objectFit: 'cover', height: '200px', marginBottom: '10px', width: '100%' }}
+            />
+            <a href={`/recipe/${recipe.id}`} style={{ textDecoration: 'none', color: '#333', fontSize: '18px', fontWeight: 'bold', textAlign: 'center' }}>
+              {recipe.title}
+            </a>
+            <p style={{ fontSize: '16px', marginBottom: '20px', textAlign: 'center' }}>{recipe.description}</p>
           </div>
         ))}
       </div>
