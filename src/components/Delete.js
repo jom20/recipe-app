@@ -6,7 +6,8 @@ const Delete = () => {
 
   useEffect(() => {
     // Fetch recipes from the server
-    axios.get('http://localhost:8800/api/recipes')
+    axios
+      .get('http://localhost:8800/api/recipes')
       .then(response => {
         setRecipes(response.data);
       })
@@ -17,7 +18,8 @@ const Delete = () => {
 
   const handleDelete = id => {
     // Send delete request to the server
-    axios.delete(`http://localhost:8800/api/recipes/${id}`)
+    axios
+      .delete(`http://localhost:8800/api/recipes/${id}`)
       .then(response => {
         console.log('Recipe deleted successfully');
         // Update the recipe list after deleting
@@ -34,14 +36,27 @@ const Delete = () => {
       <ul className="list-group">
         {recipes.map(recipe => (
           <li className="list-group-item" key={recipe.id}>
-            <img className="custom-logo" src={recipe.image} alt={recipe.title} />
-            <span>{recipe.title}</span>
-            <button
-              className="btn btn-danger"
-              onClick={() => handleDelete(recipe.id)}
-            >
-              Delete
-            </button>
+            <div className="row align-items-center">
+              <div className="col-4">
+                <img
+                  className="custom-logo rounded-circle"
+                  src={recipe.image}
+                  alt={recipe.title}
+                  style={{ width: '100px', height: '100px' }}
+                />
+              </div>
+              <div className="col-6">
+                <span className="fw-bold">{recipe.title}</span>
+              </div>
+              <div className="col-2">
+                <button
+                  className="btn btn-danger btn-sm"
+                  onClick={() => handleDelete(recipe.id)}
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
           </li>
         ))}
       </ul>

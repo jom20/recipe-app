@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 const Update = () => {
@@ -16,22 +17,6 @@ const Update = () => {
       });
   }, []);
 
-  const handleUpdate = recipeId => {
-    // Handle update logic here
-    console.log(`Update recipe with ID: ${recipeId}`);
-
-    // Example update request to the server
-    axios
-      .put(`http://localhost:8800/api/recipes/${recipeId}`, { /* Updated recipe data */ })
-      .then(response => {
-        console.log('Recipe updated successfully');
-        // Perform any necessary UI updates or navigation after successful update
-      })
-      .catch(error => {
-        console.error(error);
-      });
-  };
-
   return (
     <div className="container mt-4">
       <h2 className="text-center">Update Recipe</h2>
@@ -44,9 +29,9 @@ const Update = () => {
                   <img className="nature-image" src={recipe.image} alt={recipe.title} />
                   {recipe.title}
                 </div>
-                <button className="btn btn-primary nature-btn" onClick={() => handleUpdate(recipe.id)}>
+                <Link to={`/update/${recipe.id}`} className="btn btn-primary nature-btn">
                   Update
-                </button>
+                </Link>
               </li>
             ))}
           </ul>
